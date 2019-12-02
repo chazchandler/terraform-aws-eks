@@ -413,4 +413,26 @@ data "aws_iam_policy_document" "worker_autoscaling" {
       values   = ["true"]
     }
   }
+
+  statement {
+    sid    = "eksResourceControllerUnassignPrivateIPs"
+    effect = "Allow"
+
+    actions = [
+      "ec2:UnassignPrivateIpAddresses",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
+    sid    = "eksCNIeniCreateTags"
+    effect = "Allow"
+
+    actions = [
+      "ec2:CreateTags",
+    ]
+
+    resources = ["arn:aws:ec2:*:*:network-interface/*"]
+  }
 }
