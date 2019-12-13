@@ -54,7 +54,7 @@ module "my-cluster" {
 ```
 ## Conditional creation
 
-Sometimes you need to have a way to create EKS resources conditionally but Terraform does not allow to use `count` inside `module` block, so the solution is to specify argument `create_eks`. 
+Sometimes you need to have a way to create EKS resources conditionally but Terraform does not allow to use `count` inside `module` block, so the solution is to specify argument `create_eks`.
 
 Using this feature _and_ having `manage_aws_auth=true` (the default) requires to set up the kubernetes provider in a way that allows the data sources to not exist.
 
@@ -167,6 +167,9 @@ MIT Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-a
 | create\_eks | Controls if EKS resources should be created (it affects almost all resources) | bool | `"true"` | no |
 | eks\_oidc\_root\_ca\_thumbprint | Thumbprint of Root CA for EKS OIDC, Valid until 2037 | string | `"9e99a48a9960b14926bb7f3b02e22da2b0ab7280"` | no |
 | enable\_irsa | Whether to create OpenID Connect Provider for EKS to enable IRSA | bool | `"false"` | no |
+| fargate\_iam\_role\_name | User defined fargate profiles role name. | string | `""` | no |
+| fargate\_profiles | A list of maps defining fargate profiles. See fargate_profiles_defaults for valid keys. | any | `[]` | no |
+| fargate\_profiles\_defaults | Override default values for target groups. See fargate_profiles_defaults_defaults in local.tf for valid keys. | any | `{}` | no |
 | iam\_path | If provided, all IAM roles will be created on this path. | string | `"/"` | no |
 | kubeconfig\_aws\_authenticator\_additional\_args | Any additional arguments to pass to the authenticator such as the role to assume. e.g. ["-r", "MyEksRole"]. | list(string) | `[]` | no |
 | kubeconfig\_aws\_authenticator\_command | Command to use to fetch AWS EKS credentials. | string | `"aws-iam-authenticator"` | no |
@@ -176,6 +179,7 @@ MIT Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-a
 | local\_exec\_interpreter | Command to run for local-exec resources. Must be a shell-style interpreter. If you are on Windows Git Bash is a good choice. | list(string) | `[ "/bin/sh", "-c" ]` | no |
 | manage\_aws\_auth | Whether to apply the aws-auth configmap file. | string | `"true"` | no |
 | manage\_cluster\_iam\_resources | Whether to let the module manage cluster IAM resources. If set to false, cluster_iam_role_name must be specified. | bool | `"true"` | no |
+| manage\_fargate\_iam\_resources | Whether to let the module manage Fargate IAM resources. If set to false, fargate_iam_role_name must be specified. | bool | `"true"` | no |
 | manage\_worker\_autoscaling\_policy | Whether to let the module manage the cluster autoscaling iam policy. | bool | `"true"` | no |
 | manage\_worker\_iam\_resources | Whether to let the module manage worker IAM resources. If set to false, iam_instance_profile_name must be specified for workers. | bool | `"true"` | no |
 | map\_accounts | Additional AWS account numbers to add to the aws-auth configmap. See examples/basic/variables.tf for example format. | list(string) | `[]` | no |
