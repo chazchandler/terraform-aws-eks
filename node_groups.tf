@@ -3,7 +3,7 @@ resource "aws_iam_role" "node_groups" {
   name                  = "${var.workers_role_name != "" ? var.workers_role_name : aws_eks_cluster.this[0].name}-managed-node-groups"
   assume_role_policy    = data.aws_iam_policy_document.workers_assume_role_policy.json
   permissions_boundary  = var.permissions_boundary
-  path                  = var.iam_path
+  # path                  = var.iam_path
   force_detach_policies = true
   tags                  = var.tags
 }
